@@ -1,0 +1,11 @@
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\bin\Release\net8.0\SharpRL.deps.json
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\bin\Release\net8.0\SharpRL.dll
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\bin\Release\net8.0\SharpRL.pdb
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.AssemblyInfoInputs.cache
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.AssemblyInfo.cs
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.csproj.CoreCompileInputs.cache
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.dll
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\refint\SharpRL.dll
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\SharpRL.pdb
+C:\Users\heads\OneDrive\Desktop\Random Claude Scripts & Files\SharpRL-Library\SharpRL\obj\Release\net8.0\ref\SharpRL.dll

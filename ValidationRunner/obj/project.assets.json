@@ -1,0 +1,96 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "SharpRL/3.2.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SharpRL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SharpRL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SharpRL/3.2.0": {
+      "type": "project",
+      "path": "../SharpRL/SharpRL.csproj",
+      "msbuildProject": "../SharpRL/SharpRL.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "SharpRL >= 3.2.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\heads\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts & Files\\SharpRL-Library\\ValidationRunner\\ValidationRunner.csproj",
+      "projectName": "ValidationRunner",
+      "projectPath": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts & Files\\SharpRL-Library\\ValidationRunner\\ValidationRunner.csproj",
+      "packagesPath": "C:\\Users\\heads\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts & Files\\SharpRL-Library\\ValidationRunner\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\heads\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts & Files\\SharpRL-Library\\SharpRL\\SharpRL.csproj": {
+              "projectPath": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts & Files\\SharpRL-Library\\SharpRL\\SharpRL.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "10.0.100"
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

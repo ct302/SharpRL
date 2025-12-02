@@ -1,0 +1,262 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\training\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\training\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\nn\\optimizers\\optimizers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\nn\\optimizers\\optimizers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\nn\\loss\\losses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\nn\\loss\\losses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\ienvironment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\ienvironment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl.demo\\sharprl.demo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|solutionrelative:sharprl.demo\\sharprl.demo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\iagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\iagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\nn\\layers\\gaussianpolicy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\nn\\layers\\gaussianpolicy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\nn\\layers\\activations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\nn\\layers\\activations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\environments\\mountaincarcontinuousenvironment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\environments\\mountaincarcontinuousenvironment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\contextaware\\contextawareqlearningagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\contextaware\\contextawareqlearningagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\agents\\dqnagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\agents\\dqnagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\agents\\sacagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\agents\\sacagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl\\agents\\sarsaagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23AA7175-C3F9-43FC-A437-0624082C997D}|SharpRL\\SharpRL.csproj|solutionrelative:sharprl\\agents\\sarsaagent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|solutionrelative:sharprl.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Optimizers.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Optimizers\\Optimizers.cs",
+              "RelativeDocumentMoniker": "SharpRL\\NN\\Optimizers\\Optimizers.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Optimizers\\Optimizers.cs",
+              "RelativeToolTip": "SharpRL\\NN\\Optimizers\\Optimizers.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:19:54.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Losses.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Loss\\Losses.cs",
+              "RelativeDocumentMoniker": "SharpRL\\NN\\Loss\\Losses.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Loss\\Losses.cs",
+              "RelativeToolTip": "SharpRL\\NN\\Loss\\Losses.cs",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:19:41.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IEnvironment.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\IEnvironment.cs",
+              "RelativeDocumentMoniker": "SharpRL\\IEnvironment.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\IEnvironment.cs",
+              "RelativeToolTip": "SharpRL\\IEnvironment.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAwDcAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:18:40.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SharpRL.Demo",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\SharpRL.Demo.csproj",
+              "RelativeDocumentMoniker": "SharpRL.Demo\\SharpRL.Demo.csproj",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\SharpRL.Demo.csproj",
+              "RelativeToolTip": "SharpRL.Demo\\SharpRL.Demo.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-30T03:18:40.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IAgent.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\IAgent.cs",
+              "RelativeDocumentMoniker": "SharpRL\\IAgent.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\IAgent.cs",
+              "RelativeToolTip": "SharpRL\\IAgent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:18:10.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Trainer.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Training\\Trainer.cs",
+              "RelativeDocumentMoniker": "SharpRL\\Training\\Trainer.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Training\\Trainer.cs",
+              "RelativeToolTip": "SharpRL\\Training\\Trainer.cs",
+              "ViewState": "AgIAAJ0BAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:17:43.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GaussianPolicy.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Layers\\GaussianPolicy.cs",
+              "RelativeDocumentMoniker": "SharpRL\\NN\\Layers\\GaussianPolicy.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Layers\\GaussianPolicy.cs",
+              "RelativeToolTip": "SharpRL\\NN\\Layers\\GaussianPolicy.cs",
+              "ViewState": "AgIAAH8AAAAAAAAAAAA1wG4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:16:17.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Activations.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Layers\\Activations.cs",
+              "RelativeDocumentMoniker": "SharpRL\\NN\\Layers\\Activations.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\NN\\Layers\\Activations.cs",
+              "RelativeToolTip": "SharpRL\\NN\\Layers\\Activations.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:16:16.533Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MountainCarContinuousEnvironment.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Environments\\MountainCarContinuousEnvironment.cs",
+              "RelativeDocumentMoniker": "SharpRL\\Environments\\MountainCarContinuousEnvironment.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Environments\\MountainCarContinuousEnvironment.cs",
+              "RelativeToolTip": "SharpRL\\Environments\\MountainCarContinuousEnvironment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:16:13.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ContextAwareQLearningAgent.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\ContextAware\\ContextAwareQLearningAgent.cs",
+              "RelativeDocumentMoniker": "SharpRL\\ContextAware\\ContextAwareQLearningAgent.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\ContextAware\\ContextAwareQLearningAgent.cs",
+              "RelativeToolTip": "SharpRL\\ContextAware\\ContextAwareQLearningAgent.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:16:02.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DQNAgent.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\DQNAgent.cs",
+              "RelativeDocumentMoniker": "SharpRL\\Agents\\DQNAgent.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\DQNAgent.cs",
+              "RelativeToolTip": "SharpRL\\Agents\\DQNAgent.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAACIAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:14:44.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SACAgent.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\SACAgent.cs",
+              "RelativeDocumentMoniker": "SharpRL\\Agents\\SACAgent.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\SACAgent.cs",
+              "RelativeToolTip": "SharpRL\\Agents\\SACAgent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:14:40.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SarsaAgent.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\SarsaAgent.cs",
+              "RelativeDocumentMoniker": "SharpRL\\Agents\\SarsaAgent.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL\\Agents\\SarsaAgent.cs",
+              "RelativeToolTip": "SharpRL\\Agents\\SarsaAgent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T03:14:38.658Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\Program.cs",
+              "RelativeDocumentMoniker": "SharpRL.Demo\\Program.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\Program.cs*",
+              "RelativeToolTip": "SharpRL.Demo\\Program.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T14:38:57.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

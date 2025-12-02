@@ -1,0 +1,1685 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpRL</name>
+    </assembly>
+    <members>
+        <member name="T:SharpRL.Agents.A2CAgent">
+            <summary>
+            Advantage Actor-Critic (A2C) Agent
+            The reliable workhorse between DQN and PPO - simpler than PPO, more powerful than DQN
+            
+            NFL ANALOGY:
+            A2C is like having a veteran offensive coordinator (actor) and defensive coordinator (critic):
+            - Actor Network = OC who calls the plays based on field position
+            - Critic Network = DC who evaluates field position value
+            - Single-step updates = Adjusting after every play, not waiting for game film
+            - Advantage = How much better this play was vs expected (EPA - Expected Points Added)
+            - Entropy bonus = Keeping the playbook unpredictable
+            
+            WHY A2C:
+            - Simpler than PPO (no clipping, no trajectory buffer, no mini-batches)
+            - More stable than vanilla Policy Gradient (uses critic baseline)
+            - Faster training than PPO (synchronous, immediate updates)
+            - Great for environments where you want quick adaptation
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.BuildActorNetwork(System.Int32,System.Int32,System.Int32[])">
+            <summary>
+            Build actor network (policy) - outputs log probabilities
+            NFL ANALOGY: The offensive coordinator's decision-making process
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.BuildCriticNetwork(System.Int32,System.Int32[])">
+            <summary>
+            Build critic network (value function) - outputs state value
+            NFL ANALOGY: The defensive coordinator's evaluation of field position
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.SelectAction(System.Single[],System.Boolean)">
+            <summary>
+            Select action based on current policy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.SampleFromDistribution(System.Single[])">
+            <summary>
+            Sample action from probability distribution
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.Update(System.Single[],System.Int32,System.Double,System.Single[],System.Boolean)">
+            <summary>
+            Store experience and train when buffer is full
+            A2C uses synchronous updates - train after N experiences
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.TrainOnBatch">
+            <summary>
+            Train on collected batch of experiences
+            NFL ANALOGY: Like reviewing the last few plays and adjusting strategy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.Train">
+            <summary>
+            A2C doesn't need additional training step (updates happen in Update())
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.Save(System.String)">
+            <summary>
+            Save agent to disk
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.Load(System.String)">
+            <summary>
+            Load agent from disk
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.A2CAgent.GetBufferSize">
+            <summary>
+            Get current experience buffer size
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.A2CAgent.A2CExperience">
+            <summary>
+            Experience tuple for A2C
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.ContinuousPPOAgent">
+            <summary>
+            Continuous PPO Agent for environments with continuous action spaces
+            NOW WITH COMPLETE TRAINING IMPLEMENTATION!
+            
+            NFL ANALOGY:
+            Regular PPO picks specific plays from the playbook (discrete).
+            Continuous PPO fine-tunes every parameter of the play in real-time:
+            - Exact blocking angles (23.5° instead of "left" or "right")
+            - Precise receiver routes (18.7 yards instead of "short" or "deep")
+            - QB positioning adjustments (drop back 5.2 yards instead of 5 or 6)
+            
+            This is like having an OC who can call infinite variations of plays by
+            adjusting every single parameter continuously rather than choosing from
+            a fixed playbook.
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.BuildActorNetwork(System.Int32,System.Int32,System.Int32[])">
+            <summary>
+            Build actor network for continuous actions
+            Outputs mean and log_std for Gaussian policy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.BuildCriticNetwork(System.Int32,System.Int32[])">
+            <summary>
+            Build critic network (value function)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.TrainMiniBatch(System.Int32[],System.Int32,System.Int32,System.Single[][],System.Single[][],System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Train on a mini-batch using PPO algorithm with proper backpropagation
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.ComputeValue(System.Single[])">
+            <summary>
+            Compute state value using critic network
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.ComputeLogProb(System.Single[],System.Single[])">
+            <summary>
+            Compute log probability of an action under current policy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.ComputeGAE(System.Single[],System.Single[],System.Single[],System.Boolean[])">
+            <summary>
+            Compute Generalized Advantage Estimation (GAE)
+            Like calculating Expected Points Added for each play
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.Save(System.String)">
+            <summary>
+            Save agent parameters to file
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContinuousPPOAgent.Load(System.String)">
+            <summary>
+            Load agent parameters from file
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.DQNAgent">
+            <summary>
+            Deep Q-Network Agent with integrated SharpGrad tensor system
+            Supports both standard DQN and Double DQN (reduces overestimation bias)
+            
+            NFL ANALOGY:
+            DQN is like having an AI offensive coordinator:
+            - Q-Network = Main playbook being refined each game
+            - Target Network = Stable reference playbook (updated periodically)
+            - Replay Buffer = Game film library for studying
+            - Epsilon-greedy = Mixing proven plays with trick plays
+            
+            DOUBLE DQN:
+            - Standard DQN can overestimate Q-values (too optimistic about plays)
+            - Double DQN: One coach picks the play, another coach evaluates it
+            - This separation prevents overconfidence and improves learning stability
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.BuildNetwork(System.Int32,System.Int32,System.Int32[])">
+            <summary>
+            Builds a neural network for Q-function approximation
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.CopyWeights(SharpRL.NN.Module,SharpRL.NN.Module)">
+            <summary>
+            Copies weights from source to target network
+            Like updating the reference playbook with proven plays
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.SelectAction(System.Single[],System.Boolean)">
+            <summary>
+            Select action using epsilon-greedy policy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.Update(System.Single[],System.Int32,System.Double,System.Single[],System.Boolean)">
+            <summary>
+            Store experience and train the network
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.Train">
+            <summary>
+            Legacy method - epsilon now decays automatically in Update()
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.Save(System.String)">
+            <summary>
+            Save agent to disk
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNAgent.Load(System.String)">
+            <summary>
+            Load agent from disk
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.DQNWithPERAgent">
+            <summary>
+            DQN with Prioritized Experience Replay (PER)
+            
+            NFL ANALOGY:
+            Regular DQN = studying random game film
+            DQN with PER = focusing on games where you made the biggest mistakes
+            
+            The scout who learns from his biggest draft busts will improve faster!
+            
+            KEY INNOVATION:
+            Instead of sampling uniformly from replay buffer, we sample based on TD-error.
+            Transitions where we were most "surprised" (high TD-error) are sampled more often.
+            
+            PERFORMANCE GAINS:
+            - 2-3x faster learning
+            - Better sample efficiency  
+            - Higher final performance
+            - More stable training
+            
+            TECHNICAL DETAILS:
+            1. Store transitions with priority = |TD-error| + ε
+            2. Sample with probability ∝ priority^α
+            3. Correct bias with importance sampling weights
+            4. Update priorities after each training step
+            
+            COMPARED TO REGULAR DQN:
+            Same algorithm, just smarter experience replay!
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNWithPERAgent.#ctor(System.Int32,System.Int32,System.Int32[],System.Int32,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Single,System.Single,System.Single,System.Nullable{System.Int32})">
+            <summary>
+            Create a DQN agent with Prioritized Experience Replay
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNWithPERAgent.Train(System.Int32)">
+            <summary>
+            Train on a batch using prioritized sampling
+            Key difference: We use importance sampling weights and update priorities
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.DQNWithPERAgent.GetPriorityStats">
+            <summary>
+            Get priority buffer statistics for monitoring
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.PPOAgent">
+            <summary>
+            Proximal Policy Optimization (PPO) Agent
+            The Tom Brady of RL algorithms - reliable, consistent, and championship-proven
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.PPOActorLossFunction">
+            <summary>
+            PPO Actor Loss backward function
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.PPOPolicyLossFunction">
+            <summary>
+            PPO Policy Loss backward (without entropy)
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.QLearningAgent`2">
+            <summary>
+            Q-Learning Agent - learns optimal action values through experience
+            Like a QB learning which plays work best in different situations
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.QLearningAgent`2.SelectAction(`0,System.Boolean)">
+            <summary>
+            Select action using epsilon-greedy policy
+            Like deciding whether to call the safe play or try something risky
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.QLearningAgent`2.Update(`0,`1,System.Double,`0,System.Boolean)">
+            <summary>
+            Q-Learning update rule:
+            Q(s,a) ← Q(s,a) + α[r + γ·max(Q(s',a')) - Q(s,a)]
+            
+            Like updating your playbook rating:
+            NewRating = OldRating + LearningSpeed * (ActualResult + FutureValue - OldRating)
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.SACAgent">
+            <summary>
+            SAC (Soft Actor-Critic) Agent
+            Maximum Entropy Reinforcement Learning for Continuous Control
+            
+            NFL ANALOGY:
+            If TD3 is like a coach with a FIXED playbook (deterministic), SAC is like a coach who
+            keeps the playbook FLEXIBLE and ADAPTABLE (stochastic). SAC doesn't just want to win -
+            it wants to win while maintaining MAXIMUM OPTIONS. Think of Bill Belichick: he doesn't
+            just find one winning strategy, he maintains multiple ways to win so opponents can't
+            predict his plays. This "entropy" (unpredictability) makes SAC incredibly robust.
+            
+            THE MAXIMUM ENTROPY FRAMEWORK:
+            Instead of just maximizing reward, SAC maximizes: Reward + α × Entropy
+            
+            Where:
+            - Reward: How well you're doing (score differential)
+            - Entropy: How unpredictable/diverse your actions are (playbook flexibility)
+            - α (alpha): Temperature parameter that balances the two (auto-tuned!)
+            
+            FOUR KEY INNOVATIONS:
+            
+            1. Stochastic Policy with Entropy Bonus
+               - Policy outputs a DISTRIBUTION over actions (Gaussian)
+               - Agent is rewarded for keeping options open
+               - Naturally explores without needing epsilon-greedy
+               - Like keeping multiple plays ready instead of committing to one
+               
+            2. Automatic Temperature Tuning
+               - α parameter learned automatically during training
+               - No manual tuning needed - agent finds right balance
+               - Early: High α → explore more (find all plays)
+               - Late: Low α → exploit more (use best plays)
+               
+            3. Twin Q-Networks (from TD3)
+               - Two independent critics for conservative estimates
+               - Prevents overestimation bias
+               - Like having two scouts verify each play's value
+               
+            4. Off-Policy Learning with Replay Buffer
+               - Learns from past experiences (sample efficient)
+               - Can reuse data multiple times
+               - Like studying game film from previous seasons
+            
+            MATH BREAKDOWN (in plain English):
+            
+            The SAC objective is:
+            J(π) = E[∑(r_t + α·H(π(·|s_t)))]
+            
+            Where:
+            - J(π): Total value of policy π (how good is our playbook)
+            - E[...]: Expected value (average over many games)
+            - r_t: Reward at time t (points scored this play)
+            - α: Temperature (how much we value flexibility)
+            - H(π(·|s_t)): Entropy of policy at state s_t (how unpredictable we are)
+            
+            In simpler terms: "Pick actions that score points AND keep options open"
+            
+            The Policy Loss is:
+            L_π = E[α·log π(a|s) - Q(s,a)]
+            
+            Breaking it down:
+            - log π(a|s): Negative log probability of action a in state s (lower = more likely action)
+            - Q(s,a): Expected future reward (how good is this action long-term)
+            - α·log π(a|s): Entropy penalty (cost of predictability)
+            - We MINIMIZE this loss, which means:
+              * Maximize Q(s,a) - pick high-value actions
+              * Minimize α·log π(a|s) - stay unpredictable
+            
+            The Temperature Update:
+            α_loss = -α · (log π(a|s) + H_target)
+            
+            Where:
+            - H_target: Target entropy (usually -dim(action_space))
+            - log π(a|s): Current policy entropy
+            - If entropy too low → increase α → encourage more exploration
+            - If entropy too high → decrease α → focus on exploitation
+            
+            WHEN TO USE SAC:
+            - Complex continuous control (robotics, autonomous systems)
+            - When you need robust policies (handles perturbations well)
+            - When exploration is critical (sparse rewards)
+            - When sample efficiency matters (learns from replay buffer)
+            - Production systems that need to adapt to changing conditions
+            
+            SAC vs TD3 vs PPO:
+            - SAC: Stochastic + entropy → most robust, handles exploration best
+            - TD3: Deterministic + twin critics → fastest inference, good for known environments
+            - PPO: On-policy + trust region → most stable training, good for beginners
+            
+            SAC Performance:
+            - Often matches or beats TD3 on continuous control benchmarks
+            - More stable than TD3 (stochastic policy smooths gradients)
+            - Better exploration than TD3 (entropy bonus)
+            - Can handle multimodal reward landscapes (multiple good strategies)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.#ctor(System.Int32,System.Int32,System.Int32[],System.Single,System.Int32,System.Single,System.Single,System.Single,System.Boolean,System.Single,System.Nullable{System.Single},System.Nullable{System.Int32})">
+            <summary>
+            Create a new SAC agent
+            </summary>
+            <param name="stateDim">Dimension of state space</param>
+            <param name="actionDim">Dimension of action space</param>
+            <param name="hiddenLayers">Hidden layer sizes (default: [256, 256])</param>
+            <param name="actionScale">Scale factor for actions (default: 1.0)</param>
+            <param name="bufferSize">Size of replay buffer (default: 100000)</param>
+            <param name="learningRate">Learning rate for all networks (default: 3e-4)</param>
+            <param name="gamma">Discount factor (default: 0.99)</param>
+            <param name="tau">Target network update rate (default: 0.005)</param>
+            <param name="autoTuneAlpha">Auto-tune temperature parameter (default: true)</param>
+            <param name="initialAlpha">Initial temperature value (default: 0.2)</param>
+            <param name="targetEntropy">Target entropy (default: -actionDim, auto-calculated if null)</param>
+            <param name="seed">Random seed for reproducibility</param>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.BuildActorNetwork(System.Int32,System.Int32,System.Int32[])">
+            <summary>
+            Build actor network that outputs mean and log_std for Gaussian policy
+            Output shape: [batch, actionDim * 2] where first half is mean, second half is log_std
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.BuildCriticNetwork(System.Int32,System.Int32,System.Int32[])">
+            <summary>
+            Build critic network that takes state and action as input
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.SelectAction(System.Single[],System.Boolean)">
+            <summary>
+            Sample action from policy
+            Uses reparameterization trick: a = tanh(μ + σ * ε) where ε ~ N(0,1)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.SampleAction(SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Sample action and compute log probability (used during training)
+            Returns: (action, log_prob)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.ComputeLogProb(SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Compute log probability of action under Gaussian policy with tanh squashing
+            log π(a|s) = log N(u|μ,σ) - Σ log(1 - tanh²(u))
+            
+            Breaking it down:
+            - log N(u|μ,σ): Log probability of pre-tanh action u under Gaussian
+            - Σ log(1 - tanh²(u)): Correction for tanh transformation (change of variables)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.Train(System.Int32)">
+            <summary>
+            Train the agent using a batch of experiences
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SACAgent.Train(System.Single[][],System.Single[][],System.Single[],System.Single[][],System.Boolean[])">
+            <summary>
+            Train on batch of collected experience (IContinuousAgent interface implementation)
+            This is a wrapper that converts the batch format to match the Store/Train pattern
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.SarsaAgent`2">
+            <summary>
+            SARSA Agent - State-Action-Reward-State-Action
+            On-policy TD learning - learns from the actual plays being called
+            Like a QB who learns from their actual decisions, not hypothetical best plays
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.SarsaAgent`2.Update(`0,`1,System.Double,`0,System.Boolean)">
+            <summary>
+            SARSA Update: Q(s,a) ← Q(s,a) + α[r + γ·Q(s',a') - Q(s,a)]
+            
+            Key difference from Q-Learning:
+            - Q-Learning uses max Q(s',a') (off-policy - learns optimal)
+            - SARSA uses actual Q(s',a') (on-policy - learns from actual behavior)
+            
+            Like learning from the plays you actually call, not the theoretical best
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.INeuralNetwork">
+            <summary>
+            Simple neural network interface for Q-function approximation
+            This would ideally integrate with SharpGrad
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.SimpleNeuralNetwork">
+            <summary>
+            Basic feedforward neural network implementation
+            Like the brain of your AI coach - processes game state and outputs play values
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.TD3Agent">
+            <summary>
+            TD3 (Twin Delayed Deep Deterministic Policy Gradient) Agent
+            State-of-the-art continuous control algorithm
+            
+            NFL ANALOGY:
+            If DDPG is like having one scout evaluate plays, TD3 is like having TWO independent 
+            scouts evaluate the same play and taking the MORE CONSERVATIVE estimate. This prevents
+            overconfidence - like when one scout thinks a receiver is wide open but another scout
+            sees the safety lurking. TD3 listens to the pessimistic scout, which leads to more
+            reliable long-term strategy.
+            
+            THREE KEY INNOVATIONS:
+            1. Twin Critics (Clipped Double Q-Learning)
+               - Two independent Q-networks evaluate actions
+               - Use MINIMUM of both estimates (conservative)
+               - Reduces overestimation bias that plagued DDPG
+               
+            2. Delayed Policy Updates
+               - Update actor less frequently than critics (e.g., every 2 steps)
+               - Let critics stabilize before changing policy
+               - Like letting scouts finish analysis before changing playbook
+               
+            3. Target Policy Smoothing
+               - Add small noise to target actions
+               - Prevents exploiting Q-function errors
+               - Smooths value estimates across similar actions
+            
+            WHEN TO USE TD3:
+            - Continuous control tasks (robotics, autonomous vehicles)
+            - When sample efficiency matters (fewer training steps)
+            - When stability is critical (production systems)
+            - When you need deterministic policies (no randomness at test time)
+            
+            TD3 vs PPO:
+            - TD3: Off-policy (learns from replay buffer), more sample efficient
+            - PPO: On-policy (learns from fresh data), more stable on some tasks
+            - TD3: Better for tasks with dense rewards
+            - PPO: Better for tasks with sparse rewards
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.TD3Agent.#ctor(System.Int32,System.Int32,System.Int32[],System.Single,System.Int32,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Nullable{System.Int32})">
+            <summary>
+            Create a new TD3 agent
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.TD3Agent.Train(System.Single[][],System.Single[][],System.Single[],System.Single[][],System.Boolean[])">
+            <summary>
+            Train on batch of collected experience (IContinuousAgent interface implementation)
+            This is a wrapper that converts the batch format to match the Store/Train pattern
+            </summary>
+        </member>
+        <member name="T:SharpRL.Agents.ContextAwareQLearningAgent`2">
+            <summary>
+            Q-Learning agent with context awareness for dynamic decision-making strategies.
+            
+            NFL ANALOGY:
+            Like having separate playbooks for different game situations:
+            - Normal offense playbook (moving the ball efficiently)
+            - Two-minute drill playbook (urgency, clock management)
+            - Goal-line playbook (power runs, play-action)
+            
+            The agent learns different Q-values for the SAME field position based on context,
+            allowing optimal strategies to emerge for each situation.
+            
+            EXAMPLE USE CASES:
+            - GridWorld: Safe vs Danger contexts (flee enemies vs reach goal)
+            - Shopping Agent: Normal vs Holiday Season contexts (standard vs bulk ordering)
+            - Trading Bot: Bull Market vs Bear Market contexts (aggressive vs defensive)
+            - Game AI: Winning vs Losing contexts (conservative vs risky plays)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.RegisterHeuristic(SharpRL.Core.IContext,System.Func{`0,`1})">
+            <summary>
+            Register a heuristic strategy for a specific context.
+            Used when the agent encounters an unexplored state in this context.
+            
+            NFL ANALOGY:
+            Teaching the QB instinctive reactions before they've practiced:
+            - "If blitz is coming and you haven't seen this coverage, throw hot route"
+            - "If winning by 20 in 4th quarter, run the ball"
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.SelectAction(`0,System.Boolean)">
+            <summary>
+            Select an action for the given physical state.
+            Automatically detects context and uses appropriate strategy.
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.Update(`0,`1,System.Double,`0,System.Boolean)">
+            <summary>
+            Update Q-values based on experience.
+            Automatically handles context detection for current and next states.
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.Train">
+            <summary>
+            Decay exploration rate (epsilon)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.IsStateUnexplored(SharpRL.Core.ContextualState{`0})">
+            <summary>
+            Check if a contextual state is unexplored (never been updated)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.Save(System.String)">
+            <summary>
+            Save agent state to file
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.Load(System.String)">
+            <summary>
+            Load agent state from file
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.GetEpsilon">
+            <summary>
+            Get current exploration rate (epsilon)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.GetQTableSize">
+            <summary>
+            Get the size of the Q-table (number of state-action pairs)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.GetUnexploredStateCount">
+            <summary>
+            Get the number of unexplored contextual states
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.MarkStateAsExplored(`0,SharpRL.Core.IContext)">
+            <summary>
+            Manually mark a state as explored (useful for pre-training or transfer learning)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.MarkStateAsUnexplored(`0,SharpRL.Core.IContext)">
+            <summary>
+            Manually mark a state as unexplored (useful for curriculum learning)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Agents.ContextAwareQLearningAgent`2.GetContextsWithHeuristics">
+            <summary>
+            Get all registered contexts that have heuristics
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.Experience`2">
+            <summary>
+            Experience tuple - like game film of a single play
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.ReplayBuffer`2">
+            <summary>
+            Experience Replay Buffer - like a film room with game footage
+            Stores past plays to learn from
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffer`2.Add(SharpRL.Core.Experience{`0,`1})">
+            <summary>
+            Add experience to buffer (save the game film)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffer`2.Add(`0,`1,System.Double,`0,System.Boolean)">
+            <summary>
+            Add experience using individual components
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffer`2.Sample(System.Int32)">
+            <summary>
+            Sample batch of experiences (pull random game film for study)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffer`2.Clear">
+            <summary>
+            Clear all experiences
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.ContextualState`1">
+            <summary>
+            Wraps a physical state with a context to create a composite state representation.
+            
+            NFL ANALOGY:
+            Physical State = Field position (e.g., "Own 25-yard line")
+            Context = Game situation (e.g., "Two-minute drill")
+            Contextual State = "Own 25-yard line during two-minute drill"
+            
+            The agent learns different Q-values for the same field position based on context.
+            </summary>
+            <typeparam name="TState">The underlying physical state type</typeparam>
+        </member>
+        <member name="P:SharpRL.Core.ContextualState`1.PhysicalState">
+            <summary>
+            The underlying physical state (position, board state, etc.)
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.ContextualState`1.Context">
+            <summary>
+            The operational context affecting decision-making
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ContextualState`1.Deconstruct(`0@,SharpRL.Core.IContext@)">
+            <summary>
+            Deconstruct for pattern matching and tuple assignment
+            Example: var (state, context) = contextualState;
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.ContinuousActions.IContinuousAgent">
+            <summary>
+            Interface for agents that handle continuous action spaces
+            
+            NFL ANALOGY:
+            Discrete actions = choosing specific play calls from playbook (#1, #2, #3)
+            Continuous actions = adjusting play parameters on the fly (blocking angle: 23.5°, 
+                                 receiver route depth: 18.7 yards, QB drop back: 5.2 yards)
+            
+            Continuous agents work in spaces where actions have infinite precision rather than
+            discrete choices. Think adjusting a slider vs pushing a button.
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ContinuousActions.IContinuousAgent.SelectAction(System.Single[],System.Boolean)">
+            <summary>
+            Select a continuous action given a state
+            </summary>
+            <param name="state">Current state observation</param>
+            <param name="deterministic">If true, return mean action without exploration noise</param>
+            <returns>Continuous action vector</returns>
+        </member>
+        <member name="M:SharpRL.Core.ContinuousActions.IContinuousAgent.Train(System.Single[][],System.Single[][],System.Single[],System.Single[][],System.Boolean[])">
+            <summary>
+            Train the agent on collected experience
+            </summary>
+            <param name="states">Batch of states</param>
+            <param name="actions">Batch of actions taken</param>
+            <param name="rewards">Batch of rewards received</param>
+            <param name="nextStates">Batch of next states</param>
+            <param name="dones">Batch of done flags</param>
+        </member>
+        <member name="M:SharpRL.Core.ContinuousActions.IContinuousAgent.Save(System.String)">
+            <summary>
+            Save agent parameters to file
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ContinuousActions.IContinuousAgent.Load(System.String)">
+            <summary>
+            Load agent parameters from file
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.IContext">
+            <summary>
+            Represents an operational context that affects agent decision-making.
+            Think of it like game situations in football: Normal offense vs Two-minute drill vs Goal-line stand
+            Each context can have completely different optimal strategies for the same physical state.
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IContext.Id">
+            <summary>
+            Unique identifier for this context (0-based indexing recommended)
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IContext.Name">
+            <summary>
+            Human-readable name for debugging and logging
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IContext.Priority">
+            <summary>
+            Optional: Priority level for context resolution when multiple contexts apply
+            Higher values = higher priority (like danger overriding normal operations)
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.SimpleContext">
+            <summary>
+            Simple built-in context implementation for common use cases
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer">
+            <summary>
+            Prioritized Experience Replay Buffer
+            
+            NFL ANALOGY:
+            Regular replay buffer = watching random game film
+            Prioritized replay = focusing on games where you made the biggest mistakes
+            
+            The idea: Learn more from surprising/unexpected outcomes (high TD-error).
+            
+            MATH BREAKDOWN:
+            
+            Priority Calculation:
+            p_i = (|TD-error| + ε)^α
+            
+            Where:
+            - |TD-error|: How wrong we were (surprise factor)
+            - ε: Small constant (0.01) to ensure non-zero priority
+            - α: Exponent (0.6) controlling how much to prioritize
+                 α=0: uniform sampling (no prioritization)
+                 α=1: full prioritization (greedy)
+            
+            Sampling Probability:
+            P(i) = p_i^α / Σ(p_j^α)
+            
+            Importance Sampling Weight:
+            w_i = (1/N * 1/P(i))^β
+            
+            Where:
+            - N: Buffer size
+            - β: Bias correction (0→1 over training)
+                 β=0: no correction (biased updates)
+                 β=1: full correction (unbiased)
+            
+            WHY IMPORTANCE SAMPLING?
+            Prioritized sampling changes the distribution, creating bias.
+            We correct this by weighting updates: high-priority samples get lower weights.
+            
+            PERFORMANCE GAINS:
+            - 2-3x faster learning on Atari games
+            - More sample efficient (learn from mistakes)
+            - Better final performance
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.#ctor(System.Int32,System.Single,System.Single,System.Single,System.Single,System.Nullable{System.Int32})">
+            <summary>
+            Create a new prioritized replay buffer
+            </summary>
+            <param name="capacity">Maximum number of transitions to store</param>
+            <param name="alpha">Priority exponent (0=uniform, 1=full prioritization). Default: 0.6</param>
+            <param name="beta">Initial importance sampling weight (0=no correction, 1=full). Default: 0.4</param>
+            <param name="betaIncrement">How much to increase beta per sample. Default: 0.001</param>
+            <param name="epsilon">Small constant added to priorities. Default: 0.01</param>
+            <param name="seed">Random seed</param>
+        </member>
+        <member name="P:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.Size">
+            <summary>
+            Current number of transitions in the buffer
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.Add(System.Single[],System.Single[],System.Single,System.Single[],System.Boolean)">
+            <summary>
+            Add a transition with maximum priority (will be sampled soon)
+            New experiences are important until we learn their true TD-error
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.Sample(System.Int32)">
+            <summary>
+            Sample a batch of transitions based on priorities
+            Returns: (states, actions, rewards, nextStates, dones, indices, weights)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.UpdatePriorities(System.Int32[],System.Single[])">
+            <summary>
+            Update priorities based on TD-errors
+            Call this after computing loss/TD-error for sampled batch
+            </summary>
+            <param name="indices">Indices from Sample()</param>
+            <param name="tdErrors">TD-errors for each transition</param>
+        </member>
+        <member name="M:SharpRL.Core.ReplayBuffers.PrioritizedReplayBuffer.GetStats">
+            <summary>
+            Get statistics about the buffer priorities (for monitoring)
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.ReplayBuffers.SumTree">
+            <summary>
+            Sum Tree Data Structure for Prioritized Experience Replay
+            
+            NFL ANALOGY:
+            Think of this like a draft board where teams are ranked by priority (need).
+            The Sum Tree lets us quickly:
+            1. Sample players based on team needs (O(log n))
+            2. Update priorities when needs change (O(log n))
+            3. Get total "draft capital" instantly (O(1))
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.IAgent`2">
+            <summary>
+            Base agent interface - the player/coach making decisions
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IAgent`2.SelectAction(`0,System.Boolean)">
+            <summary>
+            Select action based on current state (call the play)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IAgent`2.Update(`0,`1,System.Double,`0,System.Boolean)">
+            <summary>
+            Update agent after observing transition (learn from the play result)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IAgent`2.Train">
+            <summary>
+            Train the agent on a batch of experiences
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IAgent`2.Save(System.String)">
+            <summary>
+            Save agent to disk
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IAgent`2.Load(System.String)">
+            <summary>
+            Load agent from disk
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.IPolicy`2">
+            <summary>
+            Policy interface - the playbook/strategy
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IPolicy`2.GetActionProbabilities(`0)">
+            <summary>
+            Get action probabilities for a state (play selection probabilities)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IPolicy`2.SampleAction(`0)">
+            <summary>
+            Sample action from policy (pick a play from the playbook)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IPolicy`2.GetBestAction(`0)">
+            <summary>
+            Get best action (greedy) - the "money play"
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.IValueFunction`2">
+            <summary>
+            Value function interface - evaluates how good a state/action is
+            Like QB rating or Expected Points Added (EPA)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IValueFunction`2.GetStateValue(`0)">
+            <summary>
+            Get state value V(s) - how good is this field position?
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IValueFunction`2.GetActionValue(`0,`1)">
+            <summary>
+            Get action value Q(s,a) - how good is this play call in this situation?
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IValueFunction`2.Update(`0,`1,System.Double)">
+            <summary>
+            Update value estimates
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.IEnvironment`2">
+            <summary>
+            Core environment interface - like the NFL field where all action happens
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IEnvironment`2.CurrentState">
+            <summary>
+            Current state of the environment (field position, game situation)
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IEnvironment`2.IsDone">
+            <summary>
+            Whether the episode is complete (game over, touchdown, turnover)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IEnvironment`2.Reset">
+            <summary>
+            Reset environment to initial state (new game/drive)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IEnvironment`2.Step(`1)">
+            <summary>
+            Execute action and return (newState, reward, done, info)
+            Like calling a play and seeing the result
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IEnvironment`2.GetValidActions">
+            <summary>
+            Get all valid actions from current state (available plays in playbook)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.IEnvironment`2.Render">
+            <summary>
+            Render/visualize the current state
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IEnvironment`2.ObservationShape">
+            <summary>
+            Get observation space dimensions
+            </summary>
+        </member>
+        <member name="P:SharpRL.Core.IEnvironment`2.ActionSpaceSize">
+            <summary>
+            Get action space dimensions
+            </summary>
+        </member>
+        <member name="T:SharpRL.Core.StepResult`1">
+            <summary>
+            Result from environment step - like the outcome of a play
+            </summary>
+        </member>
+        <member name="M:SharpRL.Core.StepResult`1.Deconstruct(`0@,System.Single@,System.Boolean@)">
+            <summary>
+            Deconstruct method to enable tuple-style deconstruction
+            Example: var (nextState, reward, done) = env.Step(action);
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.AddFunction">
+            <summary>
+            Addition operation with automatic differentiation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.SubtractFunction">
+            <summary>
+            Subtraction operation with automatic differentiation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.MultiplyFunction">
+            <summary>
+            Element-wise multiplication with automatic differentiation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.DivideFunction">
+            <summary>
+            Element-wise division with automatic differentiation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.ScalarMultiplyFunction">
+            <summary>
+            Scalar multiplication with automatic differentiation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.MatMulFunction">
+            <summary>
+            Matrix multiplication with automatic differentiation
+            Like combining player stats with team strategies
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.ReLUFunction">
+            <summary>
+            ReLU activation function: max(0, x)
+            Like keeping only positive yardage plays
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.SigmoidFunction">
+            <summary>
+            Sigmoid activation: 1 / (1 + e^-x)
+            Like calculating win probability
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.TanhFunction">
+            <summary>
+            Tanh activation function
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.MeanFunction">
+            <summary>
+            Mean operation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.SumFunction">
+            <summary>
+            Sum operation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.TransposeFunction">
+            <summary>
+            Transpose operation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.ReshapeFunction">
+            <summary>
+            Reshape operation
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.BroadcastBiasFunction">
+            <summary>
+            Broadcast bias from (outFeatures,) to (batchSize, outFeatures)
+            Gradient is summed across batch dimension back to original bias
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.GatherFunction">
+            <summary>
+            Gather operation - extracts values at specific indices along dimension 1
+            Used in DQN to extract Q-values for taken actions
+            Input: [batchSize, numActions], Indices: [batchSize], Output: [batchSize, 1]
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.Tensor">
+            <summary>
+            Multi-dimensional tensor with automatic differentiation support.
+            The core data structure for neural networks in SharpRL.
+            
+            NFL ANALOGY:
+            Think of a Tensor like game statistics that flow through your playbook:
+            - Data = The raw stats (yards, completions, etc.)
+            - Grad = How much each stat affects the final score
+            - RequiresGrad = Whether we're tracking this stat for analysis
+            - GradFn = The play that generated these stats
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.Data">
+            <summary>
+            The underlying data (like raw game stats)
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.Shape">
+            <summary>
+            Shape of the tensor (like [games, quarters, stats])
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.Strides">
+            <summary>
+            Strides for efficient indexing
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.Size">
+            <summary>
+            Total number of elements
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.Grad">
+            <summary>
+            Gradient tensor (how much this affects the loss)
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.RequiresGrad">
+            <summary>
+            Whether to track gradients for this tensor
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.GradFn">
+            <summary>
+            The function that created this tensor (for backprop)
+            </summary>
+        </member>
+        <member name="P:SharpRL.AutoGrad.Tensor.IsLeaf">
+            <summary>
+            Whether this is a leaf tensor (created by user, not by operation)
+            Only leaf tensors accumulate gradients
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.#ctor(System.Single[],System.Int32[],System.Boolean)">
+            <summary>
+            Creates a tensor from data and shape
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Zeros(System.Int32[],System.Boolean)">
+            <summary>
+            Creates a tensor filled with zeros (like an empty stat sheet)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Ones(System.Int32[],System.Boolean)">
+            <summary>
+            Creates a tensor filled with ones
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Randn(System.Int32[],System.Boolean,System.Single)">
+            <summary>
+            Creates a tensor with random normal values (He initialization)
+            Like randomizing starting positions in Madden
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Uniform(System.Int32[],System.Single,System.Single,System.Boolean)">
+            <summary>
+            Creates a tensor with uniform random values
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.ComputeStrides(System.Int32[])">
+            <summary>
+            Computes strides for multi-dimensional indexing
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Reshape(System.Int32[])">
+            <summary>
+            Reshapes the tensor (like reorganizing stats into different views)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.T">
+            <summary>
+            Transposes a 2D tensor
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Clone">
+            <summary>
+            Creates a copy of the tensor
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Detach">
+            <summary>
+            Detaches tensor from computation graph
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Backward">
+            <summary>
+            Performs backpropagation (like reviewing game film to see what led to the score)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.BuildTopo(SharpRL.AutoGrad.Tensor,System.Collections.Generic.HashSet{SharpRL.AutoGrad.Tensor},System.Collections.Generic.List{SharpRL.AutoGrad.Tensor})">
+            <summary>
+            Builds topological ordering for backprop
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.ZeroGrad">
+            <summary>
+            Clears the gradient (like resetting stats for a new game)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Addition(SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Element-wise addition
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Subtraction(SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Element-wise subtraction
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Multiply(SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Element-wise multiplication
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Division(SharpRL.AutoGrad.Tensor,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Element-wise division
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Multiply(SharpRL.AutoGrad.Tensor,System.Single)">
+            <summary>
+            Scalar multiplication
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.op_Multiply(System.Single,SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Scalar multiplication (commutative)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.MatMul(SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Matrix multiplication (like combining player stats with team coefficients)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.ReLU">
+            <summary>
+            ReLU activation: max(0, x) (like keeping only positive plays)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Sigmoid">
+            <summary>
+            Sigmoid activation: 1 / (1 + e^-x) (probability of success)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Tanh">
+            <summary>
+            Tanh activation: (e^x - e^-x) / (e^x + e^-x)
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Mean">
+            <summary>
+            Computes mean of all elements
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Sum">
+            <summary>
+            Computes sum of all elements
+            </summary>
+        </member>
+        <member name="M:SharpRL.AutoGrad.Tensor.Item">
+            <summary>
+            Gets a single element (for scalar tensors)
+            </summary>
+        </member>
+        <member name="T:SharpRL.AutoGrad.Function">
+            <summary>
+            Base class for all automatic differentiation functions
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.AcrobotEnvironment">
+            <summary>
+            Classic Acrobot-v1 Environment - two-link underactuated robot
+            Goal: Swing the tip above a target height using only elbow torque
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.CartPoleEnvironment">
+            <summary>
+            Classic CartPole-v1 Environment for discrete control
+            
+            NFL ANALOGY:
+            Imagine a running back (the cart) trying to balance a football on a pole while running.
+            The RB can only move left or right, and must keep the ball balanced.
+            If the ball tilts too far or the RB runs out of bounds, it's a turnover!
+            
+            GOAL: Keep the pole balanced upright by moving the cart left or right.
+            
+            STATE: [cart_position, cart_velocity, pole_angle, pole_angular_velocity]
+            ACTION: 0 = Push Left, 1 = Push Right
+            REWARD: +1 for every step the pole stays upright
+            DONE: Pole angle > ±12°, cart position > ±2.4, or 500 steps reached
+            
+            SUCCESS CRITERIA: Average reward of 195+ over 100 consecutive episodes
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.CartPoleEnvironment.IsSolved(System.Collections.Generic.List{System.Double})">
+            <summary>
+            Check if the current episode is considered "solved"
+            CartPole-v1 is solved when average reward is 195+ over 100 episodes
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.GridWorld">
+            <summary>
+            GridWorld environment - classic RL testing ground
+            Like a simplified football field with grid positions
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.GridWorldWithEnemies">
+            <summary>
+            Enhanced GridWorld with enemy support for context-aware Q-Learning
+            
+            NFL ANALOGY:
+            - Grid = Football field
+            - Agent = Running back
+            - Goal = End zone
+            - Enemies = Defensive players
+            - Context = Defensive pressure (open field vs crowded)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.Step(System.Int32)">
+            <summary>
+            Execute an action and return (reward, nextState, done)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.GetValidActions(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Get all valid actions from current position
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.IsInDanger(System.ValueTuple{System.Int32,System.Int32},System.Int32)">
+            <summary>
+            Check if position is in danger (enemy within threshold distance)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.GetManhattanDistance(System.ValueTuple{System.Int32,System.Int32},System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Get Manhattan distance between two positions
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.GetHeuristicMoveTowardsGoal(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Heuristic: Move toward goal (for safe context)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.GetHeuristicFlee(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Heuristic: Flee from nearest enemy (for danger context)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.MoveEnemiesRandomly">
+            <summary>
+            Move all enemies randomly (one step each)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.Render">
+            <summary>
+            Render the current grid state to console
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.GridWorldWithEnemies.AddEnemy(System.ValueTuple{System.Int32,System.Int32})">
+            <summary>
+            Add a new enemy at specified position
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.MountainCarEnvironment">
+            <summary>
+            Classic MountainCar-v0 Environment for discrete control
+            
+            NFL ANALOGY:
+            Imagine a punt returner stuck at the bottom of a valley (the 10-yard line).
+            The returner isn't strong enough to run straight up the hill to the goal.
+            Instead, they must rock back and forth, building momentum like a pendulum,
+            until they have enough speed to crest the hill and reach the goal!
+            
+            GOAL: Reach the flag at the top of the hill (position ≥ 0.5) using momentum.
+            
+            STATE: [position, velocity]
+            ACTION: 0 = Accelerate Left, 1 = No Acceleration, 2 = Accelerate Right
+            REWARD: -1 for every step (encourages reaching goal quickly)
+            DONE: Position ≥ 0.5 (reached flag) or 200 steps reached
+            
+            KEY INSIGHT: Direct action won't work! Must build momentum by going backwards first.
+            SUCCESS CRITERIA: Reach the flag consistently (position ≥ 0.5)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.MountainCarEnvironment.GetHeight(System.Single)">
+            <summary>
+            Get the height of the mountain at a given position (for visualization)
+            </summary>
+        </member>
+        <member name="M:SharpRL.Environments.MountainCarEnvironment.IsGoalReached">
+            <summary>
+            Check if the car has reached the goal
+            </summary>
+        </member>
+        <member name="T:SharpRL.Environments.PendulumEnvironment">
+            <summary>
+            Classic Pendulum Environment for continuous control
+            
+            NFL ANALOGY:
+            Imagine a QB trying to keep perfect throwing mechanics (the pendulum at vertical).
+            The QB can apply small muscle adjustments (continuous torque) to maintain form.
+            If mechanics drift too far, it costs energy and reduces throwing accuracy.
+            
+            GOAL: Keep the pendulum upright using minimal continuous control force.
+            This tests smooth, precise control rather than binary decisions.
+            
+            STATE: [cos(θ), sin(θ), angular_velocity] - angle and speed of pendulum
+            ACTION: [torque] - continuous force applied (-2.0 to +2.0)
+            REWARD: -(θ² + 0.1*θ_dot² + 0.001*torque²) - penalizes deviation and effort
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Sequential">
+            <summary>
+            Sequential container for stacking layers
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.ReLU">
+            <summary>
+            ReLU activation layer
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Sigmoid">
+            <summary>
+            Sigmoid activation layer
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Tanh">
+            <summary>
+            Tanh activation layer
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.LogSoftmax">
+            <summary>
+            LogSoftmax activation layer with proper gradient support
+            log(softmax(x)) = x - log(sum(exp(x)))
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.LogSoftmaxFunction">
+            <summary>
+            LogSoftmax backward function
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Softmax">
+            <summary>
+            Softmax activation layer
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.SoftmaxFunction">
+            <summary>
+            Softmax backward function
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Dropout">
+            <summary>
+            Dropout layer for regularization
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.GaussianPolicy">
+            <summary>
+            Gaussian Policy Network for continuous action spaces
+            Outputs mean and log standard deviation for each action dimension
+            
+            NFL ANALOGY:
+            Instead of picking play #1, #2, or #3 (discrete), this lets you call plays with
+            continuous adjustments - like "run play #1 but adjust blocking angle by 23.5 degrees"
+            
+            The Gaussian distribution is like having a confidence interval on your play call:
+            - Mean = Your intended play adjustment
+            - Std = How much variation/exploration you allow
+            - Log Std = Keeps std positive (you can't have negative confidence)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.#ctor(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Nullable{System.Int32})">
+            <summary>
+            Create a Gaussian policy network
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.Sample(System.Single[],System.Boolean)">
+            <summary>
+            Sample an action from the Gaussian distribution
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.LogProb(System.Single[],System.Single[])">
+            <summary>
+            Compute log probability of an action under the current policy
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.Entropy">
+            <summary>
+            Get entropy of the policy distribution
+            Higher entropy = more exploration
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.UpdateLogStd(System.Single)">
+            <summary>
+            Update log standard deviation (for learning exploration)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.GaussianPolicy.GetStd">
+            <summary>
+            Get current standard deviation value
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Layers.Linear">
+            <summary>
+            Fully connected (linear) layer: y = xW^T + b
+            
+            NFL ANALOGY:
+            Like offensive line formations:
+            - Input = Players coming to the line
+            - Weights = Blocking assignments for each player
+            - Bias = Base formation adjustment
+            - Output = Resulting protection/gaps created
+            </summary>
+        </member>
+        <member name="P:SharpRL.NN.Layers.Linear.Weight">
+            <summary>
+            Weight matrix (the blocking schemes)
+            </summary>
+        </member>
+        <member name="P:SharpRL.NN.Layers.Linear.Bias">
+            <summary>
+            Bias vector (formation adjustments) - null if bias disabled
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.Linear.#ctor(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Creates a linear layer
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Layers.Linear.Forward(SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Forward pass: output = input @ W^T + b
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Loss.MSELoss">
+            <summary>
+            Mean Squared Error Loss: (1/n) * Σ(predicted - target)²
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Loss.CrossEntropyLoss">
+            <summary>
+            Cross Entropy Loss for classification
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Loss.SmoothL1Loss">
+            <summary>
+            Smooth L1 Loss (Huber Loss) - robust to outliers
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Module">
+            <summary>
+            Base class for all neural network modules (layers, models, etc.).
+            
+            NFL ANALOGY:
+            Think of Module as a coaching unit:
+            - Parameters = The playbook (learned strategies)
+            - Forward = Execute the play
+            - Train/Eval = Practice vs Game mode
+            </summary>
+        </member>
+        <member name="P:SharpRL.NN.Module.IsTraining">
+            <summary>
+            Whether the module is in training mode
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.Train">
+            <summary>
+            Sets the module to training mode (like practice)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.Eval">
+            <summary>
+            Sets the module to evaluation mode (like game time)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.Parameters">
+            <summary>
+            Returns all trainable parameters (the playbook)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.Forward(SharpRL.AutoGrad.Tensor)">
+            <summary>
+            Forward pass computation (execute the play)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.ZeroGrad">
+            <summary>
+            Clears gradients for all parameters (reset for new play)
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.StateDict">
+            <summary>
+            Save module state
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Module.LoadStateDict(System.Collections.Generic.Dictionary{System.String,System.Single[]})">
+            <summary>
+            Load module state
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Optimizers.Optimizer">
+            <summary>
+            Base class for all optimizers
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Optimizers.Optimizer.ZeroGrad">
+            <summary>
+            Clears gradients for all parameters
+            </summary>
+        </member>
+        <member name="M:SharpRL.NN.Optimizers.Optimizer.Step">
+            <summary>
+            Updates parameters based on gradients
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Optimizers.SGD">
+            <summary>
+            Stochastic Gradient Descent (SGD) optimizer
+            
+            NFL ANALOGY:
+            Like adjusting your playbook after each game:
+            - Learning rate = How much you change based on one game
+            - Momentum = Keeping successful plays from previous games
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Optimizers.Adam">
+            <summary>
+            Adam optimizer (Adaptive Moment Estimation)
+            
+            NFL ANALOGY:
+            Like having both offensive and defensive coordinators:
+            - First moment (mean) = Average direction plays are working
+            - Second moment (variance) = How consistent each play is
+            - Adapts learning rate per parameter based on history
+            </summary>
+        </member>
+        <member name="T:SharpRL.NN.Optimizers.RMSprop">
+            <summary>
+            RMSprop optimizer
+            Like Adam but without the first moment tracking
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.Trainer`2">
+            <summary>
+            Unified training infrastructure for all RL agents
+            
+            NFL ANALOGY:
+            The Trainer is like the head coach managing the season:
+            - Episodes = Games in the season
+            - Checkpoints = Saving the playbook after key wins
+            - Metrics = Season statistics tracking
+            - Callbacks = Adjustments based on performance
+            </summary>
+        </member>
+        <member name="M:SharpRL.Training.Trainer`2.AddCallback(SharpRL.Training.ICallback{`0,`1})">
+            <summary>
+            Add a callback for training events
+            </summary>
+        </member>
+        <member name="M:SharpRL.Training.Trainer`2.Train">
+            <summary>
+            Main training loop
+            Like running through a full season
+            </summary>
+        </member>
+        <member name="M:SharpRL.Training.Trainer`2.Evaluate(System.Int32)">
+            <summary>
+            Evaluate agent performance without exploration
+            Like playoff games where you use your best strategies
+            </summary>
+        </member>
+        <member name="M:SharpRL.Training.Trainer`2.PrintSummary(SharpRL.Training.TrainingResult)">
+            <summary>
+            Print training summary
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.TrainingConfig">
+            <summary>
+            Training configuration
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.TrainingResult">
+            <summary>
+            Training result summary
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.MetricsTracker">
+            <summary>
+            Metrics tracking for training
+            Like keeping season statistics
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.ICallback`2">
+            <summary>
+            Base interface for training callbacks
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.LoggingCallback`2">
+            <summary>
+            Logging callback for training progress
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.CheckpointCallback`2">
+            <summary>
+            Checkpoint callback for saving models periodically
+            </summary>
+        </member>
+        <member name="T:SharpRL.Training.EarlyStoppingCallback`2">
+            <summary>
+            Early stopping callback to prevent overfitting
+            </summary>
+        </member>
+    </members>
+</doc>

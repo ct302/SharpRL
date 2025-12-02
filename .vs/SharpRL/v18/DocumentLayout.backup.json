@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|c:\\users\\heads\\onedrive\\desktop\\random claude scripts \u0026 files\\sharprl-library\\sharprl.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2B5FF654-9FF7-4960-9204-D07A4A2B7381}|SharpRL.Demo\\SharpRL.Demo.csproj|solutionrelative:sharprl.demo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\Program.cs",
+              "RelativeDocumentMoniker": "SharpRL.Demo\\Program.cs",
+              "ToolTip": "C:\\Users\\heads\\OneDrive\\Desktop\\Random Claude Scripts \u0026 Files\\SharpRL-Library\\SharpRL.Demo\\Program.cs*",
+              "RelativeToolTip": "SharpRL.Demo\\Program.cs*",
+              "ViewState": "AgIAAEMBAAAAAAAAAAAUwEwBAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T14:38:57.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

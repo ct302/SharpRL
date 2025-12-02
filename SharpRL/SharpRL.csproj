@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SharpRL</RootNamespace>
+    <AssemblyName>SharpRL</AssemblyName>
+    
+    <!-- Version -->
+    <Version>3.2.0</Version>
+    <FileVersion>3.2.0</FileVersion>
+    <AssemblyVersion>3.2.0</AssemblyVersion>
+    
+    <!-- Package Metadata -->
+    <PackageId>SharpRL</PackageId>
+    <Authors>CT</Authors>
+    <Company>CT</Company>
+    <Product>SharpRL</Product>
+    <Description>Championship-grade reinforcement learning library for C# and .NET. Includes 11 production-ready algorithms (Q-Learning, SARSA, DQN, Double DQN, DQN+PER, A2C, PPO, Continuous PPO, TD3, SAC, Context-Aware Q-Learning) with integrated automatic differentiation, neural network module system, and classic control environments. Zero external ML dependencies.</Description>
+    <Copyright>Copyright (c) 2024 CT</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ctheadz33/SharpRL</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ctheadz33/SharpRL</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>reinforcement-learning;machine-learning;deep-learning;neural-networks;rl;dqn;ppo;sac;td3;a2c;q-learning;csharp;dotnet;autograd;tensor</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Version 3.2.0: SAC algorithm, Prioritized Experience Replay, bug fixes for DQN epsilon decay and SAC gradients</PackageReleaseNotes>
+    
+    <!-- Build Configuration -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
