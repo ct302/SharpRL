@@ -6,6 +6,11 @@
 ## Build Status
 ✅ 0 Errors, 0 Warnings | ✅ All Validation Tests Passing | ✅ Ready for Portfolio & Open Source
 
+## 🌐 GitHub Repository
+**Published:** https://github.com/ct302/SharpRL  
+**Status:** ✅ Live and public  
+**Version:** 3.2.0 (main branch)
+
 ## Production Readiness Checklist (✅ COMPLETE)
 
 ### Critical Items (DONE)

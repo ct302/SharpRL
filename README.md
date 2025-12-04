@@ -1,9 +1,9 @@
 # SharpRL 3.2 - Championship-Grade Reinforcement Learning for C# 🏆
 
-[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://github.com/yourusername/SharpRL)
+[![Version](https://img.shields.io/badge/version-3.2.0-blue.svg)](https://github.com/ct302/SharpRL)
 [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Completion](https://img.shields.io/badge/completion-95%25-success.svg)](COMPLETION_STATUS.md)
+[![Completion](https://img.shields.io/badge/completion-100%25-success.svg)](COMPLETION_STATUS.md)
 
 ## 🎯 The GOAT of C# Reinforcement Learning Libraries
 
